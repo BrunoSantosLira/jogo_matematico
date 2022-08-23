@@ -1,0 +1,295 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://fuente.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Button.tscn" type="PackedScene" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+var numero1 = null
+var numero2 = null
+var resultado = 0
+var operacion = \"\"
+onready var res = $Resultado
+
+func _on_0_pressed():
+	res.set_text(res.get_text() + \"0\")
+
+func _on_3_pressed():
+	res.set_text(res.get_text() + \"3\")
+
+func _on_2_pressed():
+	res.set_text(res.get_text() + \"2\")
+
+func _on_1_pressed():
+	res.set_text(res.get_text() + \"1\")
+
+func _on_6_pressed():
+	res.set_text(res.get_text() + \"6\")
+
+func _on_5_pressed():
+	res.set_text(res.get_text() + \"5\")
+
+func _on_4_pressed():
+	res.set_text(res.get_text() + \"4\")
+
+func _on_9_pressed():
+	res.set_text(res.get_text() + \"9\")
+
+func _on_8_pressed():
+	res.set_text(res.get_text() + \"8\")
+
+func _on_7_pressed():
+	res.set_text(res.get_text() + \"7\")
+
+func _on_punto_pressed():
+	var punto = false
+	for i in res.get_text():
+		if i == \".\":
+			punto = true
+	if !punto:
+		res.set_text(res.get_text() + \".\")
+
+func _on_borrarTodo_pressed():
+	numero1 = null
+	numero2 = null
+	res.set_text(\"\")
+
+func _on_borrar_pressed():
+	var text = []
+	for i in res.get_text():
+		text.append(i)
+	text.remove(text.size() - 1)
+	res.set_text(\"\")
+	for i in text:
+		res.set_text(res.get_text() + i)
+
+func _on_dividir_pressed():
+	operacion = \"dividir\"
+	if numero1 == null:
+		numero1 = float(res.get_text())
+		res.set_text(\"\")
+	else:
+		numero2 = float(res.get_text())
+		realizar_operacion(operacion)
+	#res.set_text(res.get_text() + \"÷\")
+
+
+func _on_multiplicar_pressed():
+	operacion = \"multiplicar\"
+	if numero1 == null:
+		numero1 = float(res.get_text())
+		res.set_text(\"\")
+	else:
+		numero2 = float(res.get_text())
+		realizar_operacion(operacion)
+	#res.set_text(res.get_text() + \"x\")
+
+
+func _on_restar_pressed():
+	operacion = \"restar\"
+	if numero1 == null:
+		numero1 = float(res.get_text())
+		res.set_text(\"\")
+	else:
+		numero2 = float(res.get_text())
+		realizar_operacion(operacion)
+	#res.set_text(res.get_text() + \"-\")
+
+
+func _on_sumar_pressed():
+	operacion = \"sumar\"
+	if numero1 == null:
+		numero1 = float(res.get_text())
+		res.set_text(\"\")
+	else:
+		numero2 = float(res.get_text())
+		realizar_operacion(operacion)
+
+
+func _on_calcular_pressed():
+	#if numero1 != null:
+	realizar_operacion(operacion)
+
+
+func realizar_operacion(op):
+	if numero2 == null:
+		numero2 = float(res.get_text())
+	if numero1 != null:
+		match op:
+			\"dividir\":
+				resultado = numero1 / numero2
+				res.set_text(str(resultado))
+			\"multiplicar\":
+				resultado = numero1 * numero2
+				res.set_text(str(resultado))
+			\"restar\":
+				resultado = numero1 - numero2
+				res.set_text(str(resultado))
+			\"sumar\":
+				resultado = numero1 + numero2
+				res.set_text(str(resultado))
+	numero1 = null
+	numero2 = null
+"
+
+[node name="Calculadora" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+
+[node name="Resultado" type="Label" parent="."]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 450.0
+margin_bottom = 150.0
+rect_min_size = Vector2( 400, 100 )
+rect_pivot_offset = Vector2( 200, 50 )
+custom_fonts/font = ExtResource( 1 )
+align = 2
+
+[node name="borrarTodo" parent="." instance=ExtResource( 2 )]
+margin_left = 50.0
+margin_top = 150.0
+margin_right = 150.0
+margin_bottom = 250.0
+
+[node name="borrar" parent="." instance=ExtResource( 2 )]
+margin_left = 150.0
+margin_top = 150.0
+margin_right = 250.0
+margin_bottom = 250.0
+text = "<"
+
+[node name="dividir" parent="." instance=ExtResource( 2 )]
+margin_left = 250.0
+margin_top = 150.0
+margin_right = 350.0
+margin_bottom = 250.0
+text = "/"
+
+[node name="multiplicar" parent="." instance=ExtResource( 2 )]
+margin_left = 350.0
+margin_top = 150.0
+margin_right = 450.0
+margin_bottom = 250.0
+text = "x"
+
+[node name="restar" parent="." instance=ExtResource( 2 )]
+margin_left = 350.0
+margin_top = 250.0
+margin_right = 450.0
+margin_bottom = 350.0
+text = "-"
+
+[node name="sumar" parent="." instance=ExtResource( 2 )]
+margin_left = 350.0
+margin_top = 350.0
+margin_right = 450.0
+margin_bottom = 450.0
+text = "+"
+
+[node name="calcular" parent="." instance=ExtResource( 2 )]
+margin_left = 350.0
+margin_top = 450.0
+margin_right = 450.0
+margin_bottom = 650.0
+rect_min_size = Vector2( 100, 200 )
+text = "="
+
+[node name="7" parent="." instance=ExtResource( 2 )]
+margin_left = 50.0
+margin_top = 250.0
+margin_right = 150.0
+margin_bottom = 350.0
+text = "7"
+
+[node name="8" parent="." instance=ExtResource( 2 )]
+margin_left = 150.0
+margin_top = 250.0
+margin_right = 250.0
+margin_bottom = 350.0
+text = "8"
+
+[node name="9" parent="." instance=ExtResource( 2 )]
+margin_left = 250.0
+margin_top = 250.0
+margin_right = 350.0
+margin_bottom = 350.0
+text = "9"
+
+[node name="4" parent="." instance=ExtResource( 2 )]
+margin_left = 50.0
+margin_top = 350.0
+margin_right = 150.0
+margin_bottom = 450.0
+text = "4"
+
+[node name="5" parent="." instance=ExtResource( 2 )]
+margin_left = 150.0
+margin_top = 350.0
+margin_right = 250.0
+margin_bottom = 450.0
+text = "5"
+
+[node name="6" parent="." instance=ExtResource( 2 )]
+margin_left = 250.0
+margin_top = 350.0
+margin_right = 350.0
+margin_bottom = 450.0
+text = "6"
+
+[node name="1" parent="." instance=ExtResource( 2 )]
+margin_left = 50.0
+margin_top = 450.0
+margin_right = 150.0
+margin_bottom = 550.0
+text = "1"
+
+[node name="2" parent="." instance=ExtResource( 2 )]
+margin_left = 150.0
+margin_top = 450.0
+margin_right = 250.0
+margin_bottom = 550.0
+text = "2"
+
+[node name="3" parent="." instance=ExtResource( 2 )]
+margin_left = 250.0
+margin_top = 450.0
+margin_right = 350.0
+margin_bottom = 550.0
+text = "3"
+
+[node name="0" parent="." instance=ExtResource( 2 )]
+margin_left = 50.0
+margin_top = 550.0
+margin_right = 250.0
+margin_bottom = 650.0
+rect_min_size = Vector2( 200, 100 )
+text = "0"
+
+[node name="punto" parent="." instance=ExtResource( 2 )]
+margin_left = 250.0
+margin_top = 550.0
+margin_right = 350.0
+margin_bottom = 650.0
+text = "."
+
+[connection signal="pressed" from="borrarTodo" to="." method="_on_borrarTodo_pressed"]
+[connection signal="pressed" from="borrar" to="." method="_on_borrar_pressed"]
+[connection signal="pressed" from="dividir" to="." method="_on_dividir_pressed"]
+[connection signal="pressed" from="multiplicar" to="." method="_on_multiplicar_pressed"]
+[connection signal="pressed" from="restar" to="." method="_on_restar_pressed"]
+[connection signal="pressed" from="sumar" to="." method="_on_sumar_pressed"]
+[connection signal="pressed" from="calcular" to="." method="_on_calcular_pressed"]
+[connection signal="pressed" from="7" to="." method="_on_7_pressed"]
+[connection signal="pressed" from="8" to="." method="_on_8_pressed"]
+[connection signal="pressed" from="9" to="." method="_on_9_pressed"]
+[connection signal="pressed" from="4" to="." method="_on_4_pressed"]
+[connection signal="pressed" from="5" to="." method="_on_5_pressed"]
+[connection signal="pressed" from="6" to="." method="_on_6_pressed"]
+[connection signal="pressed" from="1" to="." method="_on_1_pressed"]
+[connection signal="pressed" from="2" to="." method="_on_2_pressed"]
+[connection signal="pressed" from="3" to="." method="_on_3_pressed"]
+[connection signal="pressed" from="0" to="." method="_on_0_pressed"]
+[connection signal="pressed" from="punto" to="." method="_on_punto_pressed"]
